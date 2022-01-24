@@ -14,7 +14,8 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
-    "knex": "^1.0.1"
+    "knex": "^1.0.1",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "jest": "^27.4.7",
