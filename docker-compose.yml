@@ -1,0 +1,28 @@
+version: "2"
+
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    volumes: 
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: finance-api
+  api:
+    container_name: api
+    build: .
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_CLIENT: mysql2
+      DB_SCHEMA: finance-api
+      DB_USER: root
+      PASSWORD: secret
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/app
+    command: "npx nodemon --legacy-watch"
