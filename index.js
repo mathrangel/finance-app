@@ -5,8 +5,8 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.use('/', (req, res) => {
-    res.send({msg: 'Hello World'})
-})
+const authRoutes = require('./src/routes/auth.routes')
+app.use('/auth', authRoutes)
 
-app.listen(PORT, () => console.log(`server is running on port ${PORT}`))
+
+app.listen(PORT, () => console.log(`server is running on port ${PORT}`)) 
