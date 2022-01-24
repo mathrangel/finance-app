@@ -37,4 +37,23 @@ module.exports = {
             console.error(e)
         }
     },
+
+    async authentication(req, res, next) {
+        try {
+            const {
+                email,
+                password
+            } = req.body
+            
+            const userBcrypt = await knex('users').select().where({ email: email }).first()
+
+            const validate = await bcrypt.compare(password, userBcrypt.password)
+            
+            if (validate) return res.status(200).send(`LOGADO`)
+            else return res.status(400).send(`ERRO DE LOGIN`)
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
 }
