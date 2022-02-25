@@ -1,5 +1,6 @@
 const knex = require('../database')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     async get(req, res, next) {
@@ -49,8 +50,13 @@ module.exports = {
 
             const validate = await bcrypt.compare(password, userBcrypt.password)
             
-            if (validate) return res.status(200).send(`LOGADO`)
-            else return res.status(400).send(`ERRO DE LOGIN`)
+            if (!validate) res.status(400).send(`ERRO DE LOGIN`)
+            
+            const token = jwt.sign({ email: email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
+            
+            if (!token) res.status(403).send(`ERRO DE AUTHORIZAÇÃO`)
+
+            return res.send({ auth: true, token })
 
         } catch (e) {
             console.error(e)
