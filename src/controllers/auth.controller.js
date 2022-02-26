@@ -13,6 +13,22 @@ module.exports = {
       }
     },
 
+    async getById(req, res, next) {
+      try {
+        const { id } = req.body
+        
+        if(!id) return res.status(400).send('Usuário não foi encontrado.')
+
+        await knex('users').select('id', 'name', 'email', 'created_at').where({ id: id })
+        .then(data => {
+          res.send(data)
+        })
+
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
     async store(req, res, next) {
       try {
         const {
@@ -56,7 +72,7 @@ module.exports = {
           if (!validate) res.status(400).send({ msg: 'A Senha inserida está incorreta.' })
           
           const token = jwt.sign({ email: email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
-          
+
           if (!token) res.status(403).send({ msg: 'Erro de Autenticação' })
 
           return res.send({ auth: true, token })
