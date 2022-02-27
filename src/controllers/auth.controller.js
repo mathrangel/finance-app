@@ -1,6 +1,7 @@
 const knex = require('../database')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const User = require('../models/User')
 
 module.exports = {
     async get(req, res, next) {
@@ -39,21 +40,17 @@ module.exports = {
           email
         } = req.body
       
-        if(password !== confirmPassword) return res.status(401).send('As senhas não correspondem.')
+        if(password !== confirmPassword) return res.status(401).send({ msg: 'As senhas não correspondem.' })
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const emailValidation = knex('users').select().where({ email: email }).first()
-        if(emailValidation) return res.status(400).send('Este email já está cadastrado.')
+        const emailValidation = await knex('users').select().where({ email: email }).first()
+        if(emailValidation) return res.status(400).send({ msg: 'Este email já está cadastrado.' })
 
-        await knex('users')
-        .insert({
-          name: name,
-          password: hashedPassword,
-          email: email
-        })
+        const user = new User({ name: name, email: email, password: hashedPassword })
+        await user.save()
 
-        return res.status(201).send('Usuário criado com sucesso!')
+        return res.status(201).send({ msg: 'Usuário criado com sucesso!', data: user})
       } catch (e) {
         console.error(e)
       }
