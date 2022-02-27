@@ -2,10 +2,12 @@ const knex = require('../database')
 
 module.exports = class User {
   constructor({
+    id,
     name,
     email, 
     password
   }) {
+    this.id = id,
     this.name = name,
     this.email = email,
     this.password = password
@@ -18,5 +20,9 @@ module.exports = class User {
       email: this.email,
       password: this.password
     })
+  }
+
+  static get() {
+    return knex('users')
   }
 }

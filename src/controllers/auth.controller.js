@@ -17,15 +17,11 @@ module.exports = {
 
     async getById(req, res, next) {
       try {
-        const { id } = req.body
+        const { user_id } = req.params
         
-        if(!id) return res.status(400).send('Usuário não encontrado.')
-
-        await knex('users').select('id', 'name', 'email', 'created_at').where({ id: id })
-        .then(data => {
-          res.send(data)
-        })
-
+        const user = await User.get().select().where({ id: user_id })
+       
+        return res.send(user)
       } catch (e) {
         console.error(e)
       }
