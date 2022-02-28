@@ -19,6 +19,7 @@ module.exports = {
       const { transaction_id } = req.params
       
       const transaction = await UserTransactions.get().where({ id: transaction_id, deleted_at: null }).first()
+      if(!transaction) return res.status(400).send({ msg: 'Essa movimentação não existe.' })
       
       return res.send(transaction)
     } catch (e) {
@@ -56,6 +57,9 @@ module.exports = {
     try {
       const { transaction_id } = req.params
 
+      const transaction = await UserTransactions.get().where({ id: transaction_id, deleted_at: null }).first()
+      if(!transaction) return res.status(400).send({ msg: 'Essa movimentação não existe.' })
+      
       await knex('user_transactions').update({ deleted_at: new Date() }).where({ id: transaction_id })
 
       res.send({ msg: 'Movimentação deletada com sucesso!' })
