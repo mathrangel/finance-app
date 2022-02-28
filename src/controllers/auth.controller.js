@@ -1,30 +1,8 @@
-const knex = require('../database')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 module.exports = {
-    async get(req, res, next) {
-      try {
-        const user = await User.get().select()
-        return res.send(user)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-
-    async getById(req, res, next) {
-      try {
-        const { user_id } = req.params
-        
-        const user = await User.get().select().where({ id: user_id })
-       
-        return res.send(user)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-
     async store(req, res, next) {
       try {
         const {
@@ -38,7 +16,7 @@ module.exports = {
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const emailValidation = await knex('users').select().where({ email: email }).first()
+        const emailValidation = await User.get().select().where({ email: email }).first()
         if(emailValidation) return res.status(400).send({ msg: 'Este email já está cadastrado.' })
 
         const user = new User({ name: name, email: email, password: hashedPassword })
