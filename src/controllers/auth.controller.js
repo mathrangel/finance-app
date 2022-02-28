@@ -6,10 +6,8 @@ const User = require('../models/User')
 module.exports = {
     async get(req, res, next) {
       try {
-        await knex('users').select()
-        .then(data => {
-          res.send(data)
-        })
+        const user = await User.get().select()
+        return res.send(user)
       } catch (e) {
         console.error(e)
       }
@@ -59,10 +57,10 @@ module.exports = {
             password
           } = req.body
           
-          const userBcrypt = await knex('users').select().where({ email: email }).first()
+          const user = await User.get().select('password').where({ email: email }).first()
 
-          const validate = await bcrypt.compare(password, userBcrypt.password)
-          if (!validate) res.status(400).send({ msg: 'A Senha inserida está incorreta.' })
+          const validatePassword = await bcrypt.compare(password, user.password)
+          if (!validatePassword) res.status(400).send({ msg: 'A Senha inserida está incorreta.' })
           
           const token = jwt.sign({ email: email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
           if (!token) res.status(403).send({ msg: 'Erro de Autenticação' })
