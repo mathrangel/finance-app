@@ -13,4 +13,16 @@ module.exports = {
       console.error(e)
     }
   },
+
+  async getById(req, res, next) {
+    try {
+      const { transaction_id } = req.params
+      
+      const transaction = await UserTransactions.get().where({ id: transaction_id }).first()
+      
+      return res.send(transaction)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }
