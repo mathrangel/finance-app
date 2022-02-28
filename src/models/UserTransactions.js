@@ -7,6 +7,7 @@ module.exports = class UserTransactions{
     user_id,
     category_id,
     type_transaction,
+    value,
     created_at,
     deleted_at
   }) {
@@ -15,6 +16,7 @@ module.exports = class UserTransactions{
     this.user_id = user_id,
     this.category_id = category_id,
     this.type_transaction = type_transaction,
+    this.value = value,
     this.created_at = created_at,
     this.deleted_at = deleted_at
   }
@@ -31,6 +33,7 @@ module.exports = class UserTransactions{
       user_id: this.user_id,
       category_id: this.category_id,
       type_transaction: this.type_transaction,
+      value: this.value,
     })
   }
 }

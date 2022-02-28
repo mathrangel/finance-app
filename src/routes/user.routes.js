@@ -13,5 +13,6 @@ route.get('/:user_id/getById', tokenVerify, userController.getById)
 //USER TRANSACTIONS
 route.get('/transactions/:user_id', tokenVerify, userTransactionsController.get)
 route.get('/transactions/:transaction_id/getById', tokenVerify, userTransactionsController.getById)
+route.post('/transactions/store', tokenVerify, userTransactionsController.store)
 
 module.exports = route
