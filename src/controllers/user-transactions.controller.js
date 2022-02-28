@@ -1,12 +1,12 @@
-const User = require('../models/User')
 const UserTransactions = require('../models/UserTransactions')
+const knex = require('../database')
 
 module.exports = {
   async get(req, res, next) {
     try {
       const { user_id } = req.params
 
-      const user_transactions = await UserTransactions.get().where({ user_id: user_id })
+      const user_transactions = await UserTransactions.get().where({ user_id: user_id, deleted_at: null })
 
       return res.send(user_transactions)
     } catch (e) {
@@ -18,7 +18,7 @@ module.exports = {
     try {
       const { transaction_id } = req.params
       
-      const transaction = await UserTransactions.get().where({ id: transaction_id }).first()
+      const transaction = await UserTransactions.get().where({ id: transaction_id, deleted_at: null }).first()
       
       return res.send(transaction)
     } catch (e) {
@@ -49,6 +49,18 @@ module.exports = {
 
     } catch (e) {
       res.send(e)
+    }
+  },
+
+  async delete(req, res, next) {
+    try {
+      const { transaction_id } = req.params
+
+      await knex('user_transactions').update({ deleted_at: new Date() }).where({ id: transaction_id })
+
+      res.send({ msg: 'Movimentação deletada com sucesso!' })
+    } catch (e) {
+      console.error(e)
     }
   }
 }
