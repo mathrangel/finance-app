@@ -20,11 +20,11 @@ module.exports = class UserTransactions{
   }
 
   static get() {
-    return knex('user_tractions')
+    return knex('user_transactions')
   }
 
   save() {
-    return knex('user_tractions')
+    return knex('user_transactions')
     .insert({
       id: this.id ,
       title: this.title,
