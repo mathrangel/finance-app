@@ -1,33 +1,40 @@
 <template>
   <section class="row d-flex align-items-center justify-content-center bg-success">
     <div class="row col-8 p-5 d-flex align-items-center flex-column bg-light">
-      <h3 class="text-success mb-5"><strong>Faça seu cadastro aqui!</strong></h3>
+      <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
       <div class="col-8">
         <div>
-          <!-- 
-            COMPONENTIZAR OS INPUTS
-          -->
-          <div class="input-group mb-1 d-flex flex-column">
-            <span>Nome</span>
-            <input class="form-control w-50" type="text">
-          </div>
-          <div class="input-group mb-5 d-flex flex-column">
-            <span>Sobrenome</span>
-            <input class="form-control w-50" type="text">
-          </div>
+          <AppInputDefault 
+          v-model="user.firstName"
+          label="Nome"
+          placeholder="Digite seu Nome"
+          type="text">
+          </AppInputDefault>
+          <AppInputDefault 
+          v-model="user.lastName"
+          label="Sobrenome"
+          placeholder="Digite seu Sobrenome"
+          type="text">
+          </AppInputDefault>
         </div>
-         <div class="input-group mb-5 d-flex flex-column">
-            <span>Email</span>
-            <input class="form-control w-50" type="email">
-          </div>
-         <div class="input-group mb-1 d-flex flex-column">
-            <span>Senha</span>
-            <input class="form-control w-50" type="password">
-          </div>
-         <div class="input-group mb-5 d-flex flex-column">
-            <span>Confirmar Senha</span>
-            <input class="form-control w-50" type="password">
-          </div>
+        <AppInputDefault 
+          v-model="user.email"
+          label="Email"
+          placeholder="Digite seu Email"
+          type="email">
+        </AppInputDefault>
+        <AppInputDefault 
+          v-model="user.password"
+          label="Senha"
+          placeholder="Digite sua Senha"
+          type="password">
+        </AppInputDefault>
+        <AppInputDefault 
+          v-model="user.confirmPassword"
+          label="Confirmar Senha"
+          placeholder="Confirme sua Senha"
+          type="password">
+        </AppInputDefault>
       </div>
     </div>
     <div class="col-4 text-light d-flex align-items-center flex-column">
@@ -45,7 +52,22 @@
 </template>
 
 <script>
+import AppInputDefault from '../../components/Input/input_default.vue'
 export default {
-  name: 'ViewRegister'
+  name: 'ViewRegister',
+  components: {
+    AppInputDefault
+  },
+  data() {
+    return {
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      }
+    }
+  },
 }
 </script>
