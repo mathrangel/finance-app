@@ -1,8 +1,10 @@
 <template>
-  <section class="row d-flex align-items-center justify-content-center bg-success">
-    <div class="row col-8 p-5 d-flex align-items-center flex-column bg-light">
+  <section class="row d-flex justify-content-center">
+    <div 
+    id="container-register" 
+    class="row col-8 p-5 d-flex align-items-center flex-column">
       <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
-      <div class="col-8">
+      <div class="col-8 d-flex flex-column align-items-center mb-4">
           <AppInputDefault 
           v-model="user.name"
           label="Nome Completo"
@@ -28,29 +30,26 @@
           type="password">
         </AppInputDefault>
       </div>
-      <button @click="newUser()">CREATE User</button>
-    </div>
-    <div class="col-4 text-light d-flex align-items-center flex-column">
-      <h3>Já é cadastrado?</h3>
-        <div class="input-group mb-3 w-50 d-flex flex-column">
-          <span>Email</span>
-          <input class="form-control w-100" type="text">
-        </div>
-        <div class="input-group mb-3 w-50 d-flex flex-column">
-          <span>Senha</span>
-          <input class="form-control w-100" type="password">
-        </div>
+      <AppButtonDefault
+      @onClick="newUser" 
+      label="Criar conta"
+      type="submit">
+      </AppButtonDefault>
     </div>
   </section>
 </template>
 
 <script>
-import AppInputDefault from '../../components/Input/input_default.vue'
-import auth from '../../services/auth.service'
+import AppInputDefault from '../Input/input_default.vue'
+import AppButtonDefault from '../Button/button_default.vue'
+
+import userService from '../../services/auth.service'
+
 export default {
   name: 'ViewRegister',
   components: {
-    AppInputDefault
+    AppInputDefault,
+    AppButtonDefault,
   },
   data() {
     return {
@@ -64,8 +63,17 @@ export default {
   },
   methods: {
     newUser() {
-      auth.newUser(this.user).then(e => { console.log(e) })
+      userService.newUser(this.user).then(e => { 
+          this.$router.push('/')
+          e
+        })
+      
     }
   },
 }
 </script>
+<style>
+  #container-register {
+    border: 5px solid #eee;
+  }
+</style>
