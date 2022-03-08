@@ -3,20 +3,12 @@
     <div class="row col-8 p-5 d-flex align-items-center flex-column bg-light">
       <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
       <div class="col-8">
-        <div>
           <AppInputDefault 
-          v-model="user.firstName"
-          label="Nome"
+          v-model="user.name"
+          label="Nome Completo"
           placeholder="Digite seu Nome"
           type="text">
           </AppInputDefault>
-          <AppInputDefault 
-          v-model="user.lastName"
-          label="Sobrenome"
-          placeholder="Digite seu Sobrenome"
-          type="text">
-          </AppInputDefault>
-        </div>
         <AppInputDefault 
           v-model="user.email"
           label="Email"
@@ -36,6 +28,7 @@
           type="password">
         </AppInputDefault>
       </div>
+      <button @click="newUser()">CREATE User</button>
     </div>
     <div class="col-4 text-light d-flex align-items-center flex-column">
       <h3>Já é cadastrado?</h3>
@@ -53,6 +46,7 @@
 
 <script>
 import AppInputDefault from '../../components/Input/input_default.vue'
+import auth from '../../services/auth.service'
 export default {
   name: 'ViewRegister',
   components: {
@@ -61,12 +55,16 @@ export default {
   data() {
     return {
       user: {
-        firstName: '',
-        lastName: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: ''
-      }
+      },
+    }
+  },
+  methods: {
+    newUser() {
+      auth.newUser(this.user).then(e => { console.log(e) })
     }
   },
 }
