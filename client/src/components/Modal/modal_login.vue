@@ -1,11 +1,9 @@
 <template>
-  <section id="glass-effect" 
+  <section @click.self="this.$emit('close')"
+  id="glass-effect" 
   class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
     <div id="bg-modal-login" 
     class="rounded d-flex flex-column align-items-center justify-content-center">
-      <div>
-        <h3 class="text-success"></h3>
-      </div>
       <div class="w-100 border-bottom my-4"></div>
       <div class="mb-3">
         <h3 class="text-success">Entrar</h3>

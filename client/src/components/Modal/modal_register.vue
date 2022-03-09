@@ -1,5 +1,6 @@
 <template>
-  <section id="glass-effect" 
+  <section @click.self="this.$emit('close')"
+  id="glass-effect" 
   class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
     <div id="container-register" 
     class="row col-8 p-5 d-flex align-items-center flex-column rounded">
@@ -66,7 +67,7 @@ export default {
       userService.newUser(this.user).then(e => { 
           this.$router.push('/')
           e
-        })
+      })
     }
   },
 }
