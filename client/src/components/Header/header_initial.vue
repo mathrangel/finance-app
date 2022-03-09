@@ -1,15 +1,15 @@
 <template>
 <div>
-  <AppModalRegister v-if="modalRegister"></AppModalRegister>
-  <AppModalLogin v-if="modalLogin"></AppModalLogin>
+  <AppModalRegister @close="toggleModalRegister()" v-if="modalRegister"></AppModalRegister>
+  <AppModalLogin @close="toggleModalLogin()" v-if="modalLogin"></AppModalLogin>
   <header class="d-flex justify-content-around align-items-center">
     <div>LOGOTIPO</div>
     <div>
-      <button @click="openModalLogin()" class="btn btn-outline-success px-3 mx-2 my-3">
+      <button @click="toggleModalLogin()" class="btn btn-outline-success px-3 mx-2 my-3">
         Login
       </button>
        <AppButtonDefault
-        @onClick="openModalRegister()" 
+        @onClick="toggleModalRegister()" 
         label="Começar agora"
         type="submit">
       </AppButtonDefault>
@@ -38,10 +38,10 @@ export default {
     }
   },
   methods: {
-    openModalRegister() {
+    toggleModalRegister() {
       this.modalRegister = !this.modalRegister
     },
-    openModalLogin() {
+    toggleModalLogin() {
       this.modalLogin = !this.modalLogin
     }
   }
