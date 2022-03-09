@@ -1,10 +1,8 @@
 <template>
-  <section 
-  id="glass-effect" 
-  class="w-100 h-100 position-absolute d-flex align-items-center justify-content-center">
-    <div 
-    id="bg-modal-login" 
-    class="d-flex flex-column align-items-center justify-content-center">
+  <section id="glass-effect" 
+  class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
+    <div id="bg-modal-login" 
+    class="rounded d-flex flex-column align-items-center justify-content-center">
       <div>
         <h3 class="text-success"></h3>
       </div>
@@ -64,8 +62,11 @@ export default {
 <style>
   #bg-modal-login {
     border: 5px solid #eee;
-    border-radius: 10px;
     padding: 70px 50px;
     background-color: #fff;
+  }
+  #glass-effect {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(5px);
   }
 </style>

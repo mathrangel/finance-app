@@ -1,8 +1,8 @@
 <template>
-  <section class="row d-flex justify-content-center">
-    <div 
-    id="container-register" 
-    class="row col-8 p-5 d-flex align-items-center flex-column">
+  <section id="glass-effect" 
+  class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
+    <div id="container-register" 
+    class="row col-8 p-5 d-flex align-items-center flex-column rounded">
       <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
       <div class="col-8 d-flex flex-column align-items-center mb-4">
           <AppInputDefault 
@@ -67,7 +67,6 @@ export default {
           this.$router.push('/')
           e
         })
-      
     }
   },
 }
