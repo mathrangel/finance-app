@@ -1,7 +1,9 @@
 <template>
 <div>
   <AppModalRegister @close="toggleModalRegister()" v-if="modalRegister"></AppModalRegister>
-  <AppModalLogin @close="toggleModalLogin()" v-if="modalLogin"></AppModalLogin>
+  <AppModalLogin 
+  @close="toggleModalLogin()" 
+  @openRegister="closeLoginAndOpenRegister()" v-if="modalLogin"></AppModalLogin>
   <header class="d-flex justify-content-around align-items-center">
     <div>LOGOTIPO</div>
     <div>
@@ -43,6 +45,10 @@ export default {
     },
     toggleModalLogin() {
       this.modalLogin = !this.modalLogin
+    },
+    closeLoginAndOpenRegister() {
+      this.toggleModalLogin()
+      this.toggleModalRegister()
     }
   }
  }

@@ -26,7 +26,7 @@
       label="Entrar"
       type="submit"></AppButtonDefault>
       <div class="w-100 border-bottom my-4"></div>
-      <span>Não possui conta? <a @click="redirectToRegister()" href="#">Criar conta</a></span>
+      <span>Não possui conta? <a @click="this.$emit('openRegister')" href="#">Criar conta</a></span>
     </div>
   </section>
 </template>
@@ -49,10 +49,7 @@ export default {
   methods: {
     login() {
       console.log('login')
-    },
-    redirectToRegister() {
-      this.$router.push('/createaccount')
-    },
+    }
   }
 }
 </script>
