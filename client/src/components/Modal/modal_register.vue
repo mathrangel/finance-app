@@ -79,5 +79,6 @@ export default {
   #container-register {
     border: 5px solid #eee;
     background-color: #fff;
+    box-shadow: 5px 5px 32px 0 rgba(0, 0, 0, 0.37);
   }
 </style>

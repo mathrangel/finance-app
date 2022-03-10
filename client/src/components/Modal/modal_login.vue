@@ -9,20 +9,20 @@
         <h3 class="text-success">Entrar</h3>
       </div>
       <AppInputDefault 
-      v-model="email"
+      v-model="user.email"
       type="email"
       placeholder="Digite seu Email"
       label="Email">
       </AppInputDefault>
       <AppInputDefault
-      v-model="password"
+      v-model="user.password"
       type="password"
       placeholder="Digite sua Senha" 
       label="Senha">
       </AppInputDefault>
       <div class="mt-5"></div>
       <AppButtonDefault 
-      @onClick="login" 
+      @onClick="login()" 
       label="Entrar"
       type="submit"></AppButtonDefault>
       <div class="w-100 border-bottom my-4"></div>
@@ -34,6 +34,9 @@
 <script>
 import AppInputDefault from '../Input/input_default.vue'
 import AppButtonDefault from '../Button/button_default.vue'
+
+import userService from '../../services/auth.service'
+
 export default {
   name: 'ModalLogin',
   components: {
@@ -42,13 +45,19 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: ''
+      user: {
+        email: '',
+        password: ''
+      }
     }
   },
   methods: {
     login() {
-      console.log('login')
+      userService.login(this.user)
+      .then(e => {
+        window.localStorage.setItem('token', e.data.token)
+        this.$router.push('/home')
+      }).catch(err => alert(err))
     }
   }
 }
@@ -59,6 +68,7 @@ export default {
     border: 5px solid #eee;
     padding: 70px 50px;
     background-color: #fff;
+    box-shadow: 5px 5px 32px 0 rgba(0, 0, 0, 0.37);
   }
   #glass-effect {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
