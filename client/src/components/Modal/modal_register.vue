@@ -4,6 +4,7 @@
   class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
     <div id="container-register" 
     class="row col-8 p-5 d-flex align-items-center flex-column rounded">
+    <div class="w-100 border-bottom my-4"></div>
       <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
       <div class="col-8 d-flex flex-column align-items-center mb-4">
           <AppInputDefault 
@@ -36,6 +37,8 @@
       label="Criar conta"
       type="submit">
       </AppButtonDefault>
+      <div class="w-100 border-bottom my-4"></div>
+      <span>Já possui conta? <a @click="this.$emit('openLogin')" href="#">Fazer login</a></span>
     </div>
   </section>
 </template>
@@ -75,5 +78,6 @@ export default {
 <style>
   #container-register {
     border: 5px solid #eee;
+    background-color: #fff;
   }
 </style>
