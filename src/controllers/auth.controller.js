@@ -40,10 +40,10 @@ module.exports = {
         const validatePassword = await bcrypt.compare(password, user.password)
         if (!validatePassword) res.status(400).send({ msg: 'A Senha inserida está incorreta.' })
         
-        const token = jwt.sign({ email: email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
+        const token = jwt.sign({ email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
         if (!token) res.status(403).send({ msg: 'Erro de Autenticação' })
 
-        return res.send({ auth: true, token })
+        return res.send({ token })
 
     } catch (e) {
         console.error(e)
