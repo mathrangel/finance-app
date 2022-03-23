@@ -52,13 +52,14 @@ export default {
     }
   },
   methods: {
-    login() {
-      userService.login(this.user)
+    async login() {
+      await userService.login(this.user)
       .then(e => {
         window.localStorage.setItem('token', e.data.token)
+        this.$store.dispatch('auth/ActionSetToken', e.data)
         this.$router.push('/home')
       }).catch(err => alert(err))
-    }
+      }
   }
 }
 </script>
