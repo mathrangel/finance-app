@@ -1,11 +1,11 @@
 <template>
   <section>
     <div class="d-flex">
-      <AppCardDefault type="true" class="mx-5" label="Ganhos">
-        <div v-for="(item, index) of items" :key="index" class="d-flex justify-content-around">
+      <AppCardDefault class="mx-5" label="Ganhos">
+        <div v-for="item of earns" :key="item.id" class="d-flex justify-content-around">
           <div style="width: 150px">
             <span>
-              {{ item.type }}R${{ item.value }}
+              {{ item.type_transaction }}R${{ item.value }}
             </span>
           </div>
           <div class="w-100">
@@ -13,9 +13,20 @@
               {{ item.title }}
             </span>
           </div>
-          <span>
-            {{ item.date }}
-          </span>
+        </div>
+      </AppCardDefault>
+      <AppCardDefault :error="true" class="mx-5" label="Gastos">
+        <div v-for="item of spends" :key="item.id" class="d-flex justify-content-around">
+          <div style="width: 150px">
+            <span>
+              {{ item.type_transaction }}R${{ item.value }}
+            </span>
+          </div>
+          <div class="w-100">
+            <span>
+              {{ item.title }}
+            </span>
+          </div>
         </div>
       </AppCardDefault>
     </div>
@@ -24,6 +35,8 @@
 
 <script>
 import AppCardDefault from '../../components/Card/card_default.vue'
+import userTransactionsService from '../../services/user-transactions.service'
+
 export default {
   name: 'ViewDefault',
   components: {
@@ -31,16 +44,26 @@ export default {
   },
   data() {
     return {
-      items: [
-        {title: 'Salário', type: '+', value: 10000, date: '15/03/2022'},
-        {title: 'Bonus de aniversário', type: '+', value: 100, date: '12/03/2022'},
-        {title: 'Salário', type: '+', value: 100000, date: '15/03/2022'},
-      ]
+      items: [],
+    }
+  },
+  methods: {
+    async getTransactions() {
+      await userTransactionsService.getTransactions(1)
+      .then(e => this.items = e.data)
+      .catch(err => console.error(err))
+    }
+  },
+  mounted() {
+    this.getTransactions()
+  },
+  computed: {
+    earns() {
+      return this.items.filter(e => e.type_transaction === '+')
+    },
+    spends() {
+      return this.items.filter(e => e.type_transaction === '-')
     }
   }
 }
 </script>
-
-<style>
-
-</style>
