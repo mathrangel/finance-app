@@ -16,10 +16,11 @@ export default {
   },
   actions: {
     async ActionSetToken({ commit }, payload) {
+      window.localStorage.setItem('auth.token',payload.token)
       const user = jwt_decode(payload.token)
       
       commit('SET_AUTHENTICATION', true)
       commit('SET_USER', user)
-    }
+    },
   }
 }
