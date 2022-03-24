@@ -35,12 +35,12 @@ module.exports = {
           password
         } = req.body
         
-        const user = await User.get().select('password').where({ email: email }).first()
+        const user = await User.get().select('password', 'id').where({ email: email }).first()
 
         const validatePassword = await bcrypt.compare(password, user.password)
         if (!validatePassword) res.status(400).send({ msg: 'A Senha inserida está incorreta.' })
         
-        const token = jwt.sign({ email }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
+        const token = jwt.sign({ id: user.id, email,  }, process.env.JWTWEBTOKEN, { expiresIn: 300 })
         if (!token) res.status(403).send({ msg: 'Erro de Autenticação' })
 
         return res.send({ token })
