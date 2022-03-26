@@ -1,4 +1,5 @@
 import jwt_decode from 'jwt-decode'
+import userService from '../services/auth.service'
 
 export default {
   namespaced: true,
@@ -7,20 +8,31 @@ export default {
     loggedIn: false
   },
   mutations: {
-    SET_USER(state, payload) {
-      state.user = payload
+    MUTATION_SET_USER_DATA(state, payload) {
+      state.user = payload.user
+      state.loggedIn = payload.status
     },
-    SET_AUTHENTICATION(state, status) {
-      state.loggedIn = status
+    MUTATION_LOGOUT() {
+      localStorage.clear()
     }
   },
   actions: {
-    async ActionSetToken({ commit }, payload) {
-      window.localStorage.setItem('auth.token',payload.token)
-      const user = jwt_decode(payload.token)
-      
-      commit('SET_AUTHENTICATION', true)
-      commit('SET_USER', user)
+    async ActionLogIn({ commit }, payload) {
+      await userService.login(payload).then(e => {
+        const user = jwt_decode(e.data.token)
+        localStorage.setItem('auth.token', e.data.token)
+        localStorage.setItem('user', JSON.stringify(user))
+        commit('MUTATION_SET_USER_DATA', { user, status: true })
+      })
     },
+    async ActionAutoLogin({ commit }) {
+      const e = JSON.parse(localStorage.getItem('user'))
+      
+      if(e) commit('MUTATION_SET_USER_DATA', { user: e, status: true })
+    },
+    async ActionAutoLogout({ commit }) {
+      commit('MUTATION_LOGOUT')
+      commit('MUTATION_SET_USER_DATA', { user: null, status: false })
+    }
   }
 }
