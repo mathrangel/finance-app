@@ -44,26 +44,25 @@ export default {
   },
   data() {
     return {
-      items: [],
+      earns: null,
+      spends: null
     }
   },
   methods: {
-    async getTransactions() {
-      await userTransactionsService.getTransactions(1)
-      .then(e => this.items = e.data)
-      .catch(err => console.error(err))
-    }
+    getTransactions() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      userTransactionsService
+      .getTransactions(user.id)
+        .then(e => {
+          this.$store.dispatch('transactions/ActionSetTransactions', e.data)
+          this.earns = this.$store.state.transactions.earns
+          this.spends = this.$store.state.transactions.spends
+          })
+        .catch(err => console.error(err))
+    },
   },
   mounted() {
     this.getTransactions()
-  },
-  computed: {
-    earns() {
-      return this.items.filter(e => e.type_transaction === '+')
-    },
-    spends() {
-      return this.items.filter(e => e.type_transaction === '-')
-    }
   }
 }
 </script>
