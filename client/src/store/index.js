@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import auth from './auth'
+import transactions from './transactions'
 
 export default new Vuex.Store({
   namespaced: true,
@@ -13,6 +14,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    auth
+    auth,
+    transactions
   }
 })
