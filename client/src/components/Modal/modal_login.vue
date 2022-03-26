@@ -35,8 +35,6 @@
 import AppInputDefault from '../Input/input_default.vue'
 import AppButtonDefault from '../Button/button_default.vue'
 
-import userService from '../../services/auth.service'
-
 export default {
   name: 'ModalLogin',
   components: {
@@ -53,11 +51,8 @@ export default {
   },
   methods: {
     async login() {
-      await userService.login(this.user)
-      .then(e => {
-        this.$store.dispatch('auth/ActionSetToken', e.data)
-        this.$router.push('/home')
-      }).catch(err => alert(err))
+        this.$store.dispatch('auth/ActionLogIn', this.user)
+        .then(this.$router.push('/home'))
       }
   }
 }
