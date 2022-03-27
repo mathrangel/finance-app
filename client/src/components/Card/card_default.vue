@@ -1,6 +1,7 @@
 <template>
   <div style="width: 500px">
-    <h6 class="bg-success text-white p-2 ">{{ label }}</h6>
+    <h6 v-if="!error" class="text-white p-2 bg-success">{{ label }}</h6>
+    <h6 v-if="error" class="text-white p-2 bg-danger">{{ label }}</h6>
     <div class="p-2">
         <slot></slot>
     </div>
@@ -14,6 +15,10 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    error: {
+      type: Boolean,
+      required: false
     }
   },
 }
