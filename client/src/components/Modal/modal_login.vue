@@ -52,7 +52,9 @@ export default {
   methods: {
     async login() {
         this.$store.dispatch('auth/ActionLogIn', this.user)
-        .then(this.$router.push('/home'))
+        .then(() => {
+          this.$router.push('/home')
+        })
       }
   }
 }
