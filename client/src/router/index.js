@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Home from '../pages/Views/view_initial.vue'
 import ViewDefault from '../pages/Views/view_default.vue'
-import store from "@/store";
 
 const routes = [
   {
@@ -15,7 +14,7 @@ const routes = [
     name: 'ViewDefault',
     component: ViewDefault,
     beforeEnter: (to, from, next) => {
-      if(!store.state.auth.loggedIn) next('/')
+      if(!localStorage.getItem('auth.token')) next('/')
       else next(true)
     }
   }

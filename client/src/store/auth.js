@@ -12,8 +12,10 @@ export default {
       state.user = payload.user
       state.loggedIn = payload.status
     },
-    MUTATION_LOGOUT() {
+    MUTATION_LOGOUT(state) {
       localStorage.clear()
+      state.user = null
+      state.loggedIn = false
     }
   },
   actions: {
@@ -21,18 +23,22 @@ export default {
       await userService.login(payload).then(e => {
         const user = jwt_decode(e.data.token)
         localStorage.setItem('auth.token', e.data.token)
-        localStorage.setItem('user', JSON.stringify(user))
         commit('MUTATION_SET_USER_DATA', { user, status: true })
+        
+        const time = user.exp - Math.floor(new Date().getTime() / 1000)
+        setTimeout(() => {
+          commit('MUTATION_LOGOUT')
+        }, time * 1000)
+        
       })
     },
     async ActionAutoLogin({ commit }) {
-      const e = JSON.parse(localStorage.getItem('user'))
-      
-      if(e) commit('MUTATION_SET_USER_DATA', { user: e, status: true })
-    },
-    async ActionAutoLogout({ commit }) {
-      commit('MUTATION_LOGOUT')
-      commit('MUTATION_SET_USER_DATA', { user: null, status: false })
+      const e = localStorage.getItem('auth.token')
+
+      if(!e) return
+      const user = jwt_decode(e)
+
+      if(user) commit('MUTATION_SET_USER_DATA', { user: user, status: true })
     }
   }
 }
