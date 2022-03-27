@@ -1,11 +1,12 @@
 <template>
-  <section>
-    <div class="d-flex">
+  <section class="row">
+    <AppHeaderDefault :name="name"/>
+    <div class="col-10 d-flex m-auto">
       <AppCardDefault class="mx-5" label="Ganhos">
         <div v-for="item of earns" :key="item.id" class="d-flex justify-content-around">
           <div style="width: 150px">
             <span>
-              {{ item.type_transaction }}R${{ item.value }}
+              {{ item.type_transaction_id === 1 ? '+' : '-' }} R${{ item.value }}
             </span>
           </div>
           <div class="w-100">
@@ -19,7 +20,7 @@
         <div v-for="item of spends" :key="item.id" class="d-flex justify-content-around">
           <div style="width: 150px">
             <span>
-              {{ item.type_transaction }}R${{ item.value }}
+              {{ item.type_transaction_id === 1 ? '+' : '-' }} R${{ item.value }}
             </span>
           </div>
           <div class="w-100">
@@ -35,12 +36,14 @@
 
 <script>
 import AppCardDefault from '../../components/Card/card_default.vue'
+import AppHeaderDefault from '../../components/Header/header_default.vue'
 import userTransactionsService from '../../services/user-transactions.service'
 
 export default {
   name: 'ViewDefault',
   components: {
-    AppCardDefault
+    AppCardDefault,
+    AppHeaderDefault
   },
   data() {
     return {
@@ -63,6 +66,11 @@ export default {
   },
   mounted() {
     this.getTransactions()
+  },
+  computed: {
+    name() {
+      return this.$store.state.auth.user?.name.split(' ')[0]
+    }
   }
 }
 </script>

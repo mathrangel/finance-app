@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="row">
     <AppHeaderInitial></AppHeaderInitial>
-    <section class="d-flex align-items-center py-3 justify-content-center">
+    <section class=" col-10 m-auto d-flex align-items-center py-3 justify-content-center">
       <div class="row w-100 py-5">
         <div class="col-5 mx-5">
           <h2>

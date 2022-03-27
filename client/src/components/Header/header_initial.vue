@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="row">
   <AppModalRegister 
   @close="toggleModalRegister()" 
   @openLogin="closeRegisterAndOpenLogin()" v-if="modalRegister">
@@ -8,7 +8,7 @@
   @close="toggleModalLogin()" 
   @openRegister="closeLoginAndOpenRegister()" v-if="modalLogin">
   </AppModalLogin>
-  <header class="d-flex justify-content-between align-items-center">
+  <header class="m-auto col-10 d-flex justify-content-between align-items-center">
     <div>LOGOTIPO</div>
     <div>
       <button @click="toggleModalLogin()" class="btn btn-outline-success px-3 mx-2 my-3">
