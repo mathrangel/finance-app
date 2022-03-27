@@ -1,5 +1,5 @@
 import jwt_decode from 'jwt-decode'
-import userService from '../services/auth.service'
+import authService from '../services/auth.service'
 
 export default {
   namespaced: true,
@@ -20,16 +20,18 @@ export default {
   },
   actions: {
     async ActionLogIn({ commit }, payload) {
-      await userService.login(payload).then(e => {
-        const user = jwt_decode(e.data.token)
+      await authService.login(payload)
+      .then(e => {
         localStorage.setItem('auth.token', e.data.token)
-        commit('MUTATION_SET_USER_DATA', { user, status: true })
+        
+        const user = jwt_decode(e.data.token)
         
         const time = user.exp - Math.floor(new Date().getTime() / 1000)
         setTimeout(() => {
           commit('MUTATION_LOGOUT')
         }, time * 1000)
         
+        commit('MUTATION_SET_USER_DATA', { user, status: true })
       })
     },
     async ActionAutoLogin({ commit }) {
@@ -39,6 +41,9 @@ export default {
       const user = jwt_decode(e)
 
       if(user) commit('MUTATION_SET_USER_DATA', { user: user, status: true })
+    },
+    ActionLogout({ commit }) {
+      commit('MUTATION_LOGOUT')
     }
   }
 }
