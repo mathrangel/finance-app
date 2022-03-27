@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     getTransactions() {
-      const user = JSON.parse(localStorage.getItem('user'))
+      const user = this.$store.state.auth.user
       userTransactionsService
       .getTransactions(user.id)
         .then(e => {
