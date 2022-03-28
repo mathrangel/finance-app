@@ -1,19 +1,41 @@
+import transactionsService from "@/services/user-transactions.service"
+import transactionTypesService from "@/services/transaction-types.service"
+
 export default {
   namespaced: true,
   state: {
-    transactions: null,
-    earns: null,
-    spends: null
+    transactions: {
+      data: null,
+      types: null
+    },
+    earns: {
+      data: null,
+      length: null,
+    },
+    spends: {
+      data: null,
+      length: null
+    }
   },
   mutations: {
     SET_TRANSACTIONS(state, payload) {
-      state.transactions = payload
+      state.transactions.data = payload
     },
     SET_EARNS(state, payload) {
-      state.earns = payload
+      state.earns.data = payload
+      state.earns.length = payload.length
     },
     SET_SPENDS(state, payload) {
-      state.spends = payload
+      state.spends.data = payload
+      state.spends.length = payload.length
+    },
+    ADD_TRANSACTION(state, payload) {
+      state.transactions.data.push(payload)
+      if(payload.type_transaction_id == 1) state.earns.data.push(payload)
+      if(payload.type_transaction_id == 2) state.spends.data.push(payload)
+    },
+    SET_TRANSACTIONS_TYPES(state, payload) {
+      state.transactions.types = payload
     }
   },
   actions: {
@@ -26,5 +48,17 @@ export default {
       const spends = payload.filter(e => e.type_transaction_id === 2)
       commit('SET_SPENDS', spends)
     },
+    async ActionPostTransaction({ commit }, payload) {
+      transactionsService.storeTransactions(payload)
+        .then(e => {
+          commit('ADD_TRANSACTION', e.data.data)
+        })
+    },
+    async ActionGetTransactionsTypes({ commit }) {
+      transactionTypesService.getTransactionTypes()
+      .then(e => {
+        commit('SET_TRANSACTIONS_TYPES', e.data)
+      })
+    }
   }
 }

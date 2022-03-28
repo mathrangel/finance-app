@@ -8,5 +8,12 @@ export default {
         Authorization: getToken()
       }
     })
-  }
+  },
+  storeTransactions: (data) => {
+    return api.post(`/user/transactions/store`, data, {
+      headers: {
+        Authorization: getToken()
+      }
+    })
+  } 
 }

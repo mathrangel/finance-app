@@ -6,7 +6,7 @@
           Olá, <strong>{{ name }}</strong>! Vamos ver como está sua carteira?
         </div>
           <a href="#" class="text-white" @click="this.$store.dispatch('auth/ActionLogout')">
-            Log Out
+            Sair
           </a>
       </div>
       <div>
@@ -22,7 +22,7 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: false
     }
   }
 }
