@@ -33,7 +33,7 @@ module.exports = {
         title,
         user_id,
         category_id, 
-        type_transaction,
+        type_transaction_id,
         value
       } = req.body
 
@@ -41,12 +41,12 @@ module.exports = {
         title: title,
         user_id: user_id,
         category_id: category_id,
-        type_transaction: type_transaction,
+        type_transaction_id: type_transaction_id,
         value: value
       })
       await transaction.save()
 
-      return res.status(201).send({ msg: 'Transação registrada com sucesso!' })
+      return res.status(201).send({ data: transaction, msg: 'Transação registrada com sucesso!' })
 
     } catch (e) {
       res.send(e)
