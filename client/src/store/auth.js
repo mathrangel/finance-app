@@ -40,6 +40,8 @@ export default {
       if(!e) return
       const user = jwt_decode(e)
 
+      if(user.exp - Math.floor(new Date().getTime() / 1000) < 0) commit('MUTATION_LOGOUT')
+
       if(user) commit('MUTATION_SET_USER_DATA', { user: user, status: true })
     },
     ActionLogout({ commit }) {
