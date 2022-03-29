@@ -11,7 +11,7 @@
     style="width: 250px; font-size: 14px">
       <option value="">Selecione uma opção</option>
       <option 
-      v-for="item of optionsValue"
+      v-for="item of array"
       :value="item.id" 
       :key="item.id">
       {{ item.title }}
@@ -28,8 +28,7 @@ export default {
       type: String,
       required: true
     },
-    optionsValue: {
-      type: Array,
+    array: {
       required: true
     }
   }

@@ -100,6 +100,9 @@ export default {
     },
     totalSpends() {
       return this.$store.state.transactions.spends.total
+    },
+    totalBalance() {
+      return this.$store.state.transactions.totalBalance
     }
   }
 }

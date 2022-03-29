@@ -18,8 +18,7 @@
       <AppInputDropdown
       v-model.number="transaction.category_id"
       label="Categoria"
-      :optionsValue="typesTransaction.types"/>
-
+      :array="$store.state.transactions.transactions.types"/>
       <AppButtonDefault 
       @click="newTransaction()" 
       class="my-4" 
@@ -46,21 +45,17 @@ export default {
     return {
       transaction: {
         title: null,
-        category_id: 0,
+        category_id: null,
         type_transaction_id: this.typeTransactionId,
         value: null,
         user_id: this.$store.state.auth.user.id,
-      },
-      typesTransaction: this.$store.state.transactions.transactions
+      }
     }
   },
   methods: {
     newTransaction() {
       this.$store.dispatch('transactions/ActionPostTransaction', this.transaction)
-    },
-    getTransactionTypes() {
-      this.$store.dispatch('transactions/ActionGetTransactionsTypes')
-    },
+    }
   },
   props: {
     typeTransactionId: {
@@ -68,8 +63,8 @@ export default {
       required: true
     }
   },
-  mounted() {
-    this.getTransactionTypes()
+  created() {
+    this.$store.dispatch('transactions/ActionGetTransactionsTypes')
   }
 }
 </script>
