@@ -50,8 +50,14 @@ export default {
     },
     ADD_TRANSACTION(state, payload) {
       state.transactions.data.push(payload)
-      if(payload.type_transaction_id == 1) state.earns.data.push(payload)
-      else if(payload.type_transaction_id == 2) state.spends.data.push(payload)
+      if(payload.type_transaction_id == 1) {
+        state.earns.data.push(payload)
+        state.earns.total += payload.value
+      }
+      else if(payload.type_transaction_id == 2) {
+        state.spends.data.push(payload)
+        state.spends.total += payload.value
+      }
     },
     SET_TRANSACTIONS_TYPES(state, payload) {
       state.transactions.types = payload
@@ -73,6 +79,7 @@ export default {
       transactionsService.storeTransactions(payload)
         .then(e => {
           commit('ADD_TRANSACTION', e.data.data)
+          commit('SET_TOTAL', e.data.data)
         })
     },
     async ActionGetTransactionsTypes({ commit }) {

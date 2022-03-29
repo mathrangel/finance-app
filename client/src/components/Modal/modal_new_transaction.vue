@@ -54,7 +54,9 @@ export default {
   },
   methods: {
     newTransaction() {
-      this.$store.dispatch('transactions/ActionPostTransaction', this.transaction)
+      this.$store.dispatch('transactions/ActionPostTransaction', this.transaction).then(() => {
+        this.$emit('close')
+      })
     }
   },
   props: {
