@@ -96,20 +96,11 @@ export default {
       return this.$store.state.transactions.spends
     },
     totalEarns() {
-      let total = 0
-        for(let i = 0;i < this.earns.length; i++) {
-          total += this.earns.data[i].value
-        }
-      return total
+     return this.$store.state.transactions.earns.total
     },
     totalSpends() {
-      let total = 0
-        for(let i = 0;i < this.spends.length; i++) {
-          total += this.spends.data[i].value
-        }
-      return total
+      return this.$store.state.transactions.spends.total
     }
   }
 }
-      // else this.earns.data.reduce(({ value }, obj) => total = value + obj.value)
 </script>

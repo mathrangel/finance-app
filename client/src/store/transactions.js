@@ -11,11 +11,14 @@ export default {
     earns: {
       data: null,
       length: null,
+      total: 0
     },
     spends: {
       data: null,
-      length: null
-    }
+      length: null,
+      total: null
+    },
+    totalBalance: null
   },
   mutations: {
     SET_TRANSACTIONS(state, payload) {
@@ -24,15 +27,31 @@ export default {
     SET_EARNS(state, payload) {
       state.earns.data = payload
       state.earns.length = payload.length
+      for(let i = 0; i < payload.length; i++) {
+        state.earns.total += payload[i].value
+      }
     },
     SET_SPENDS(state, payload) {
       state.spends.data = payload
       state.spends.length = payload.length
+      for(let i = 0; i < payload.length; i++) {
+        state.spends.total += payload[i].value
+      }
+    },
+    SET_TOTAL(state, payload) {
+      for(let i = 0; i < payload.length; i++) {
+        if(payload[i].type_transaction_id == 1) {
+          state.totalBalance += payload[i].value
+        }
+        else if(payload[i].type_transaction_id == 2) {
+          state.totalBalance -= payload[i].value
+        }
+      }
     },
     ADD_TRANSACTION(state, payload) {
       state.transactions.data.push(payload)
       if(payload.type_transaction_id == 1) state.earns.data.push(payload)
-      if(payload.type_transaction_id == 2) state.spends.data.push(payload)
+      else if(payload.type_transaction_id == 2) state.spends.data.push(payload)
     },
     SET_TRANSACTIONS_TYPES(state, payload) {
       state.transactions.types = payload
@@ -47,6 +66,8 @@ export default {
 
       const spends = payload.filter(e => e.type_transaction_id === 2)
       commit('SET_SPENDS', spends)
+
+      commit('SET_TOTAL', payload)
     },
     async ActionPostTransaction({ commit }, payload) {
       transactionsService.storeTransactions(payload)
