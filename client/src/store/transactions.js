@@ -53,10 +53,12 @@ export default {
       if(payload.type_transaction_id == 1) {
         state.earns.data.push(payload)
         state.earns.total += payload.value
+        state.totalBalance += payload.value
       }
       else if(payload.type_transaction_id == 2) {
         state.spends.data.push(payload)
         state.spends.total += payload.value
+        state.totalBalance -= payload.value
       }
     },
     SET_TRANSACTIONS_TYPES(state, payload) {

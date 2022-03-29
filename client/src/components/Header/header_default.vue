@@ -1,16 +1,22 @@
 <template>
   <header class="row bg-success mb-5 text-white">
-    <div class="col-10 m-auto">
-      <div class="py-3 d-flex justify-content-between">
+    <div class="col-10 m-auto pb-3">
+      <div class="pt-3 d-flex justify-content-between">
         <div>
-          Olá, <strong>{{ name }}</strong>! Vamos ver como está sua carteira?
+          <div>
+            Olá, <strong>{{ name }}</strong>! Vamos ver como está sua carteira?
+          </div>
+          <h6 class="mt-2">
+            <small>Saldo total:<br> {{ balance }}</small>
+          </h6>
         </div>
+          <div>
           <a href="#" class="text-white" @click="this.$store.dispatch('auth/ActionLogout')">
             Sair
           </a>
+          </div>
       </div>
       <div>
-        <!-- SELEÇÃO DE MESES -->
       </div>
     </div>
   </header>
@@ -23,7 +29,12 @@ export default {
     name: {
       type: String,
       required: false
+      },
+    },
+    computed: {
+      balance() {
+        return Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(this.$store.state.transactions.totalBalance) 
+      }
     }
-  }
 }
 </script>
