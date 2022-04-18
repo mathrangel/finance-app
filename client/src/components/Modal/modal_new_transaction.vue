@@ -65,9 +65,6 @@ export default {
       required: true
     }
   },
-  created() {
-    this.$store.dispatch('transactions/ActionGetTransactionsTypes')
-  }
 }
 </script>
 
