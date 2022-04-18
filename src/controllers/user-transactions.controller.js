@@ -1,14 +1,37 @@
-const UserTransactions = require('../models/UserTransactions')
 const knex = require('../database')
+
+const Category = require('../models/Categories')
+const UserTransactions = require('../models/UserTransactions')
+const UserTransactionsTypes = require('../models/UserTransactionTypes')
+const User = require('../models/User')
 
 module.exports = {
   async get(req, res, next) {
     try {
       const { user_id } = req.params
 
-      const user_transactions = await UserTransactions.get().where({ user_id: user_id, deleted_at: null })
+      const transactionsSelectColumns = [
+        'id',
+        'title',
+        'value',
+        'category_id as category',
+        'type_transaction_id as type_transaction',
+        'user_id as user',
+        'created_at'
+      ]
 
-      return res.send(user_transactions)
+      const transactions = await UserTransactions.get().select(transactionsSelectColumns).where({ user_id: user_id, deleted_at: null })
+
+      for(const transaction of transactions) {
+        transaction.category = await Category.get().where({ id: transaction.category }).first()
+
+        transaction.user = await User.get().where({ id: transaction.user }).first()
+
+        transaction.type_transaction = await UserTransactionsTypes.get().where({ id: transaction.type_transaction }).first()
+      }
+
+
+      return res.send(transactions)
     } catch (e) {
       console.error(e)
     }
