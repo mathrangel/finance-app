@@ -6,14 +6,14 @@
      v-if="this.visibleModalNewTransation"
      />
     <AppHeaderDefault :name="name"/>
-    <div class="col-10 m-auto">
+    <div style="max-width: 1080px" class="m-auto">
       <div class="d-flex justify-content-between">
         <AppCardDefault 
         @AddTransaction="toggleModalTransaction(1)"
         v-model="typeTransactionId"
         :total="totalEarns"  
         label="Ganhos">
-          <div v-for="item of earns.data" :key="item.id" class="d-flex justify-content-around">
+          <div v-for="item of earns.data" :key="item.id" class="d-flex justify-content-around border-bottom py-3 pt-1">
             <div style="width: 150px">
               <span>
                 {{ item.type_transaction_id === 1 ? '+' : '-' }} R${{ item.value }}
@@ -31,18 +31,7 @@
         :total="totalSpends" 
         :error="true" 
         label="Gastos">
-          <div v-for="item of spends.data" :key="item.id" class="d-flex justify-content-around">
-            <div style="width: 150px">
-              <span>
-                {{ item.type_transaction_id === 1 ? '+' : '-' }} R${{ item.value }}
-              </span>
-            </div>
-            <div class="w-100">
-              <span>
-                {{ item.title }}
-              </span>
-            </div>
-          </div>
+         <AppCardItem/>
         </AppCardDefault>
       </div>
     </div>
@@ -51,6 +40,7 @@
 
 <script>
 import AppCardDefault from '../../components/Card/card_default.vue'
+import AppCardItem from '../../components/Card/card_item.vue'
 import AppHeaderDefault from '../../components/Header/header_default.vue'
 import AppModalNewTransaction from '../../components/Modal/modal_new_transaction.vue'
 
@@ -61,7 +51,8 @@ export default {
   components: {
     AppCardDefault,
     AppHeaderDefault,
-    AppModalNewTransaction
+    AppModalNewTransaction,
+    AppCardItem
   },
   data() {
     return {
@@ -84,6 +75,7 @@ export default {
   },
   mounted() {
     this.getTransactions()
+    this.$store.dispatch('transactions/ActionGetTransactionsTypes')
   },
   computed: {
     name() {

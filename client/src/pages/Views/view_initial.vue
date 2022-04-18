@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <AppHeaderInitial></AppHeaderInitial>
-    <section class=" col-10 m-auto d-flex align-items-center py-3 justify-content-center">
-      <div class="row w-100 py-5">
-        <div class="col-5 mx-5">
+    <section style="max-width: 1080px" class="m-auto d-flex align-items-center py-3 justify-content-center">
+      <div class="d-flex py-5 justify-content-between w-100">
+        <div>
           <h2>
             Controle sua <strong class="text-success">GRANA</strong> de <br>forma inteligente
           </h2>
@@ -11,8 +11,8 @@
             Organize seu dinheiro de forma adequada e <br> sem deixar os mimos de lado
           </p>
         </div>
-        <div class="col-6 d-flex justify-content-center">
-          <img width="500px" src="/images/image_initial.svg">
+        <div class="d-flex justify-content-center">
+          <img width="400px" src="/images/image_initial.svg">
         </div>
       </div>
     </section>  

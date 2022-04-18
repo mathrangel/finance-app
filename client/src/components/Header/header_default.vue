@@ -1,6 +1,6 @@
 <template>
   <header class="row bg-success mb-5 text-white">
-    <div class="col-10 m-auto pb-3">
+    <div style="max-width: 1080px" class="col-10 m-auto pb-3">
       <div class="pt-3 d-flex justify-content-between">
         <div>
           <div>
@@ -10,11 +10,9 @@
             <small>Saldo total:<br> {{ balance }}</small>
           </h6>
         </div>
-          <div>
-          <a href="#" class="text-white" @click="this.$store.dispatch('auth/ActionLogout')">
-            Sair
-          </a>
-          </div>
+        <a href="#" class="text-white" @click="this.$store.dispatch('auth/ActionLogout')">
+          Sair
+        </a>
       </div>
       <div>
       </div>
