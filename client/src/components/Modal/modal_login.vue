@@ -1,9 +1,10 @@
 <template>
   <section @click.self="this.$emit('close')"
   id="glass-effect" 
-  class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
+  class="h-100 w-100 position-fixed d-flex align-items-center justify-content-center">
     <div id="bg-modal-login" 
-    class="rounded d-flex flex-column align-items-center justify-content-center">
+    style="width: 500px"
+    class="rounded m-auto d-flex flex-column align-items-center justify-content-center">
       <div class="w-100 border-bottom my-4"></div>
       <div class="mb-3">
         <h3 class="text-success">Entrar</h3>
@@ -68,6 +69,7 @@ export default {
     box-shadow: 5px 5px 32px 0 rgba(0, 0, 0, 0.37);
   }
   #glass-effect {
+    width: 100%;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
     backdrop-filter: blur(5px);
   }

@@ -3,7 +3,8 @@
   id="glass-effect" 
   class="h-100 w-100 d-flex justify-content-center align-items-center position-fixed">
     <div id="container-register" 
-    class="row col-8 p-5 d-flex align-items-center flex-column rounded">
+    style="width: 800px"
+    class="row p-5 d-flex align-items-center flex-column rounded">
     <div class="w-100 border-bottom my-4"></div>
       <h3 class="text-success mb-5"><strong>Faça seu cadastro</strong></h3>
       <div class="col-8 d-flex flex-column align-items-center mb-4">
