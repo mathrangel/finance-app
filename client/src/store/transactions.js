@@ -27,24 +27,24 @@ export default {
     SET_EARNS(state, payload) {
       state.earns.data = payload
       state.earns.length = payload.length
-      for(let i = 0; i < payload.length; i++) {
-        state.earns.total += payload[i].value
+      for(let earn of payload) {
+        state.earns.total += earn.value
       }
     },
     SET_SPENDS(state, payload) {
       state.spends.data = payload
       state.spends.length = payload.length
-      for(let i = 0; i < payload.length; i++) {
-        state.spends.total += payload[i].value
+      for(let spend of payload) {
+        state.spends.total += spend.value
       }
     },
     SET_TOTAL(state, payload) {
-      for(let i = 0; i < payload.length; i++) {
-        if(payload[i].type_transaction_id == 1) {
-          state.totalBalance += payload[i].value
+      for(let transaction of payload) {
+        if(transaction.type_transaction.id == 1) {
+          state.totalBalance += transaction.value
         }
-        else if(payload[i].type_transaction_id == 2) {
-          state.totalBalance -= payload[i].value
+        else if(transaction.type_transaction.id == 2) {
+          state.totalBalance -= transaction.value
         }
       }
     },
