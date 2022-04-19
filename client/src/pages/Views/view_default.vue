@@ -6,8 +6,8 @@
      v-if="this.visibleModalNewTransation"
      />
     <AppHeaderDefault :name="name"/>
-    <div style="max-width: 1080px" class="m-auto">
-      <div class="d-flex justify-content-between">
+    <div style="max-width: 1080px" class="m-auto col-10">
+      <div class="d-flex justify-content-between ">
         <AppCardDefault 
         @AddTransaction="toggleModalTransaction(1)"
         v-model="typeTransactionId"
