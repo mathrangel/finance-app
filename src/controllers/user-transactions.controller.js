@@ -25,12 +25,10 @@ module.exports = {
       for(const transaction of transactions) {
         transaction.category = await Category.get().where({ id: transaction.category }).first()
 
-        transaction.user = await User.get().where({ id: transaction.user }).first()
+        transaction.user = await User.get().select('id', 'name', 'email', 'created_at', 'deleted_at').where({ id: transaction.user }).first()
 
         transaction.type_transaction = await UserTransactionsTypes.get().where({ id: transaction.type_transaction }).first()
       }
-
-
       return res.send(transactions)
     } catch (e) {
       console.error(e)
