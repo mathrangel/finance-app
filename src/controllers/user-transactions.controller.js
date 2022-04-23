@@ -4,6 +4,7 @@ const Category = require('../models/Categories')
 const UserTransactions = require('../models/UserTransactions')
 const UserTransactionsTypes = require('../models/UserTransactionTypes')
 const User = require('../models/User')
+const Colors = require('../models/Colors')
 
 module.exports = {
   async get(req, res, next) {
@@ -20,15 +21,32 @@ module.exports = {
         'created_at'
       ]
 
+      const categoriesSelectColumns = [
+        'id',
+        'type_transaction_id as type_transaction',
+        'color_id as color',
+        'title',
+        'created_at',
+        'created_by',
+        'deleted_at'
+      ]
+
       const transactions = await UserTransactions.get().select(transactionsSelectColumns).where({ user_id: user_id, deleted_at: null })
 
       for(const transaction of transactions) {
-        transaction.category = await Category.get().where({ id: transaction.category }).first()
+        transaction.category = await Category.get().select(categoriesSelectColumns).where({ id: transaction.category }).first()
+  
+        transaction.category.type_transaction = await UserTransactionsTypes.get().where({ id: transaction.category.type_transaction }).first()
+
+        transaction.category.color = await Colors.get().where({ id: transaction.category.color }).first()
 
         transaction.user = await User.get().select('id', 'name', 'email', 'created_at', 'deleted_at').where({ id: transaction.user }).first()
 
         transaction.type_transaction = await UserTransactionsTypes.get().where({ id: transaction.type_transaction }).first()
       }
+      
+      //CRIAR OPÇÃO DE AGRUPAR POR DATA EM UM ARRAY
+
       return res.send(transactions)
     } catch (e) {
       console.error(e)
@@ -40,6 +58,7 @@ module.exports = {
       const { transaction_id } = req.params
       
       const transaction = await UserTransactions.get().where({ id: transaction_id, deleted_at: null }).first()
+      console.log(transaction)
       if(!transaction) return res.status(400).send({ msg: 'Essa movimentação não existe.' })
       
       return res.send(transaction)
