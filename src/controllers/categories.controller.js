@@ -11,6 +11,7 @@ module.exports = {
         'id',
         'type_transaction_id as type_transaction',
         'color_id as color',
+        'title',
         'created_at',
         'created_by',
         'deleted_at'

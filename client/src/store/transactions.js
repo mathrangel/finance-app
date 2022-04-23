@@ -1,12 +1,14 @@
 import transactionsService from "@/services/user-transactions.service"
 import transactionTypesService from "@/services/transaction-types.service"
+import categoriesService from "@/services/categories.service"
 
 export default {
   namespaced: true,
   state: {
     transactions: {
       data: null,
-      types: null
+      types: null,
+      categories: null
     },
     earns: {
       data: null,
@@ -63,6 +65,10 @@ export default {
     },
     SET_TRANSACTIONS_TYPES(state, payload) {
       state.transactions.types = payload
+    },
+    SET_CATEGORIES(state, payload) {
+      console.log(payload)
+      state.transactions.categories = payload
     }
   },
   actions: {
@@ -88,6 +94,12 @@ export default {
       transactionTypesService.getTransactionTypes()
       .then(e => {
         commit('SET_TRANSACTIONS_TYPES', e.data)
+      })
+    },
+    async ActionGetCategories({ commit }, payload) {
+      categoriesService.getCategories(payload)
+      .then(e => {
+        commit('SET_CATEGORIES', e.data)
       })
     }
   }

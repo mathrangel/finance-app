@@ -18,7 +18,7 @@
       <AppInputDropdown
       v-model.number="transaction.category_id"
       label="Categoria"
-      :array="$store.state.transactions.transactions.types"/>
+      :array="$store.state.transactions.transactions.categories"/>
       <AppButtonDefault 
       @click="newTransaction()" 
       class="my-4" 
@@ -65,6 +65,9 @@ export default {
       required: true
     }
   },
+  mounted() {
+     this.$store.dispatch('transactions/ActionGetCategories', this.typeTransactionId)
+  }
 }
 </script>
 
