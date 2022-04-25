@@ -1,5 +1,5 @@
 <template>
-  <header class="row bg-success mb-5 text-white">
+  <header class="bg-success mb-5 text-white">
     <div style="max-width: 1080px" class="col-10 m-auto pb-3">
       <div class="pt-3 d-flex justify-content-between">
         <div>

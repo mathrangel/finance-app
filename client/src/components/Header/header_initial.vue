@@ -1,5 +1,5 @@
 <template>
-<div class="row">
+<div>
     <AppModalRegister 
     @close="toggleModalRegister()" 
     @openLogin="closeRegisterAndOpenLogin()" v-if="modalRegister">

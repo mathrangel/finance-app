@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div>
     <AppHeaderInitial></AppHeaderInitial>
     <section style="max-width: 1080px" class="m-auto d-flex align-items-center py-3 justify-content-center">
       <div class="d-flex py-5 justify-content-between w-100">

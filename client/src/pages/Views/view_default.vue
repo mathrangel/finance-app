@@ -1,5 +1,5 @@
 <template>
-  <section class="row">
+  <section>
     <AppModalNewTransaction
     :typeTransactionId="typeTransactionId" 
     @close="toggleModalTransaction()"
