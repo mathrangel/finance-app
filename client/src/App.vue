@@ -23,3 +23,16 @@ export default {
     }
   }
 </script>
+<style>
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #e0e0e0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d6d6d6;
+  }
+</style>
