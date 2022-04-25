@@ -1,10 +1,13 @@
 <template>
   <section>
-    <div v-for="item of spends.data" :key="item.id" class="my-3">
-      <span class="bg-danger p-1">
+    <div class="my-2 pb-2 border-bottom d-flex justify-content-between align-items-end">
+      <div class="p-1">
+      {{ data.title }}<br>
+      R${{ data.value }}
+      </div>
+      <span class="m-2 text-white px-3 rounded" :style="{ backgroundColor: data.category.color.hex }">
+        {{ data.category.title }}
       </span>
-        {{ categories[item.category_id - 1].title }}
-      {{ item.title }}
     </div>
   </section>
 </template>
@@ -12,18 +15,11 @@
 <script>
 export default {
   name: 'CardItem',
-  computed: {
-    spends() {
-      return this.$store.state.transactions.spends
-    },
-    categories() {
-      return this.$store.state.transactions.transactions.types
+  props: {
+    data: {
+      type: Object,
+      required: true
     }
-  },
-  mounted() {
-    console.log(this.spends)
-    console.log(this.$store.state.transactions)
-    console.log(this.categories)
   }
 }
 </script>

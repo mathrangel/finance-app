@@ -41,23 +41,21 @@ export default {
       }
     },
     SET_TOTAL(state, payload) {
-      for(let transaction of payload) {
-        if(transaction.type_transaction.id == 1) {
-          state.totalBalance += transaction.value
+        if(payload.type_transaction.id == 1) {
+          state.totalBalance += payload.value
         }
-        else if(transaction.type_transaction.id == 2) {
-          state.totalBalance -= transaction.value
+        else if(payload.type_transaction.id == 2) {
+          state.totalBalance -= payload.value
         }
-      }
     },
     ADD_TRANSACTION(state, payload) {
       state.transactions.data.push(payload)
-      if(payload.type_transaction_id == 1) {
+      if(payload.type_transaction.id === 1) {
         state.earns.data.push(payload)
         state.earns.total += payload.value
         state.totalBalance += payload.value
       }
-      else if(payload.type_transaction_id == 2) {
+      else if(payload.type_transaction.id === 2) {
         state.spends.data.push(payload)
         state.spends.total += payload.value
         state.totalBalance -= payload.value
@@ -67,7 +65,6 @@ export default {
       state.transactions.types = payload
     },
     SET_CATEGORIES(state, payload) {
-      console.log(payload)
       state.transactions.categories = payload
     }
   },
@@ -81,7 +78,9 @@ export default {
       const spends = payload.filter(e => e.type_transaction.id === 2)
       commit('SET_SPENDS', spends)
 
-      commit('SET_TOTAL', payload)
+      for(let i of payload) {
+        commit('SET_TOTAL', i)
+      }
     },
     async ActionPostTransaction({ commit }, payload) {
       transactionsService.storeTransactions(payload)

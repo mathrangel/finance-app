@@ -58,7 +58,7 @@ module.exports = {
       const { transaction_id } = req.params
       
       const transaction = await UserTransactions.get().where({ id: transaction_id, deleted_at: null }).first()
-      console.log(transaction)
+
       if(!transaction) return res.status(400).send({ msg: 'Essa movimentação não existe.' })
       
       return res.send(transaction)
@@ -77,6 +77,16 @@ module.exports = {
         value
       } = req.body
 
+      const categoriesSelectColumns = [
+        'id',
+        'type_transaction_id as type_transaction',
+        'color_id as color',
+        'title',
+        'created_at',
+        'created_by',
+        'deleted_at'
+      ]
+
       const transaction = new UserTransactions({
         title: title,
         user_id: user_id,
@@ -86,7 +96,25 @@ module.exports = {
       })
       await transaction.save()
 
-      return res.status(201).send({ data: transaction, msg: 'Transação registrada com sucesso!' })
+      const trans = {
+        title,
+        value,
+        user: null,
+        type_transaction: null,
+        category: null
+      }
+
+      trans.category = await Category.get().select(categoriesSelectColumns).where({ id: category_id }).first()
+
+      trans.category.type_transaction = await UserTransactionsTypes.get().where({ id: trans.category.type_transaction }).first()
+
+      trans.category.color = await Colors.get().where({ id:  trans.category.color }).first()
+
+      trans.user = await User.get().select('id', 'name', 'email', 'created_at', 'deleted_at').where({ id: user_id }).first()
+
+      trans.type_transaction = await UserTransactionsTypes.get().where({ id: type_transaction_id }).first()
+
+      return res.status(201).send({ data: trans, msg: 'Transação registrada com sucesso!' })
 
     } catch (e) {
       res.send(e)

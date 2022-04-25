@@ -13,25 +13,18 @@
         v-model="typeTransactionId"
         :total="totalEarns"  
         label="Ganhos">
-          <div v-for="item of earns.data" :key="item.id" class="d-flex justify-content-around border-bottom py-3 pt-1">
-            <div style="width: 150px">
-              <span>
-                {{ item.type_transaction_id === 1 ? '+' : '-' }} R${{ item.value }}
-              </span>
-            </div>
-            <div class="w-100">
-              <span>
-                {{ item.title }}
-              </span>
-            </div>
-          </div>
+          <AppCardItem 
+          v-for="item of earns.data" 
+          :key="item.id" :data="item"/>
         </AppCardDefault>
         <AppCardDefault 
         @AddTransaction="toggleModalTransaction(2)" 
         :total="totalSpends" 
         :error="true" 
         label="Gastos">
-         <AppCardItem/>
+          <AppCardItem 
+          v-for="item of spends.data" 
+          :key="item.id" :data="item"/>
         </AppCardDefault>
       </div>
     </div>
