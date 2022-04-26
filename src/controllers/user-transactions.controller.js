@@ -31,7 +31,7 @@ module.exports = {
         'deleted_at'
       ]
 
-      const transactions = await UserTransactions.get().select(transactionsSelectColumns).where({ user_id: user_id, deleted_at: null })
+      const transactions = await UserTransactions.get().select(transactionsSelectColumns).where({ user_id: user_id, deleted_at: null }).orderBy('created_at', 'desc')
 
       for(const transaction of transactions) {
         transaction.category = await Category.get().select(categoriesSelectColumns).where({ id: transaction.category }).first()
