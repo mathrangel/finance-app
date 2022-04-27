@@ -101,7 +101,8 @@ module.exports = {
         value,
         user: null,
         type_transaction: null,
-        category: null
+        category: null,
+        created_at: new Date()
       }
 
       trans.category = await Category.get().select(categoriesSelectColumns).where({ id: category_id }).first()

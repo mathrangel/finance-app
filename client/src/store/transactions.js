@@ -2,6 +2,8 @@ import transactionsService from "@/services/user-transactions.service"
 import transactionTypesService from "@/services/transaction-types.service"
 import categoriesService from "@/services/categories.service"
 
+import { groupBy } from '@/utils/agroup'
+
 export default {
   namespaced: true,
   state: {
@@ -29,36 +31,41 @@ export default {
     SET_EARNS(state, payload) {
       state.earns.data = payload
       state.earns.length = payload.length
-      for(let earn of payload) {
-        state.earns.total += earn.value
+      for(let earn in payload) {
+        for(let e of payload[earn]) {
+          state.earns.total += e.value
+        }
       }
     },
     SET_SPENDS(state, payload) {
       state.spends.data = payload
       state.spends.length = payload.length
-      for(let spend of payload) {
-        state.spends.total += spend.value
+      for(let spend in payload) {
+        for(let e of payload[spend]) {
+          state.spends.total += e.value
+        }
       }
     },
     SET_TOTAL(state, payload) {
-        if(payload.type_transaction.id == 1) {
-          state.totalBalance += payload.value
-        }
-        else if(payload.type_transaction.id == 2) {
-          state.totalBalance -= payload.value
-        }
-    },
-    ADD_TRANSACTION(state, payload) {
-      state.transactions.data.push(payload)
-      if(payload.type_transaction.id === 1) {
-        state.earns.data.push(payload)
-        state.earns.total += payload.value
+      if(payload.type_transaction.id == 1) {
         state.totalBalance += payload.value
       }
-      else if(payload.type_transaction.id === 2) {
-        state.spends.data.push(payload)
-        state.spends.total += payload.value
+      else if(payload.type_transaction.id == 2) {
         state.totalBalance -= payload.value
+      }
+    },
+    ADD_TRANSACTION(state, payload) {
+      for(let i in payload) {
+        if (i in state.earns.data && payload[i][0].type_transaction.id === 1) {
+          state.earns.data[i].unshift(payload[i][0])
+          state.earns.total += payload[i][0].value
+          state.totalBalance += payload[i][0].value
+        }
+        else if(i in state.spends.data && payload[i][0].type_transaction.id === 2) {
+          state.spends.data[i].unshift(payload[i][0])
+          state.spends.total += payload[i][0].value
+          state.totalBalance -= payload[i][0].value
+        }
       }
     },
     SET_TRANSACTIONS_TYPES(state, payload) {
@@ -73,10 +80,13 @@ export default {
       commit('SET_TRANSACTIONS', payload)
       
       const earns = payload.filter(e => e.type_transaction.id === 1)
-      commit('SET_EARNS', earns)
-
+      const earnItems = groupBy('created_at', earns)
+      
+      commit('SET_EARNS', earnItems)
+      
       const spends = payload.filter(e => e.type_transaction.id === 2)
-      commit('SET_SPENDS', spends)
+      const spendsItems = groupBy('created_at', spends)
+      commit('SET_SPENDS', spendsItems)
 
       for(let i of payload) {
         commit('SET_TOTAL', i)
@@ -85,7 +95,8 @@ export default {
     async ActionPostTransaction({ commit }, payload) {
       transactionsService.storeTransactions(payload)
         .then(e => {
-          commit('ADD_TRANSACTION', e.data.data)
+          const item = groupBy('created_at', [e.data.data])
+          commit('ADD_TRANSACTION', item)
           commit('SET_TOTAL', e.data.data)
         })
     },

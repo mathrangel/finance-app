@@ -13,18 +13,32 @@
         v-model="typeTransactionId"
         :total="totalEarns"  
         label="Ganhos">
-          <AppCardItem 
-          v-for="item of earns.data" 
-          :key="item.id" :data="item"/>
+          <div
+          v-for="(day, index) in earns.data"
+          :key="index">
+            <h5 class="p-2 pb-3 border-bottom text-success text-uppercase">
+              {{ index.split('.')[0] + index.split('.')[1] }}
+            </h5>
+            <AppCardItem 
+            v-for="item in day" 
+            :key="item.id" :data="item"/>
+          </div>
         </AppCardDefault>
         <AppCardDefault 
         @AddTransaction="toggleModalTransaction(2)" 
         :total="totalSpends" 
         :error="true" 
         label="Gastos">
-          <AppCardItem 
-          v-for="item of spends.data" 
-          :key="item.id" :data="item"/>
+         <div
+          v-for="(day, index) in spends.data"
+          :key="index">
+            <h5 class="p-2 pb-3 border-bottom text-danger text-uppercase">
+              {{ index.split('.')[0] + index.split('.')[1] }}
+            </h5>
+            <AppCardItem 
+            v-for="item in day" 
+            :key="item.id" :data="item"/>
+          </div>
         </AppCardDefault>
       </div>
     </div>
