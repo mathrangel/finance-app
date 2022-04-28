@@ -68,6 +68,9 @@ export default {
         }
       }
     },
+    DELETE_TRANSACTION() {
+      window.location.reload()
+    },
     SET_TRANSACTIONS_TYPES(state, payload) {
       state.transactions.types = payload
     },
@@ -110,6 +113,12 @@ export default {
       categoriesService.getCategories(payload)
       .then(e => {
         commit('SET_CATEGORIES', e.data)
+      })
+    },
+    async ActionDeleteTransaction({ commit }, payload) {
+      transactionsService.deleteTransaction(payload)
+      .then(() => {
+        commit('DELETE_TRANSACTION')
       })
     }
   }

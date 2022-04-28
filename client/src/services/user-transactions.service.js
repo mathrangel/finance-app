@@ -15,5 +15,12 @@ export default {
         Authorization: getToken()
       }
     })
-  } 
+  },
+  deleteTransaction: (transaction_id) => {
+    return api.delete(`/user/transactions/${transaction_id}/delete`, {
+      headers: {
+        Authorization: getToken()
+      }
+    })
+  }
 }

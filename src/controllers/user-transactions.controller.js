@@ -44,8 +44,6 @@ module.exports = {
 
         transaction.type_transaction = await UserTransactionsTypes.get().where({ id: transaction.type_transaction }).first()
       }
-      
-      //CRIAR OPÇÃO DE AGRUPAR POR DATA EM UM ARRAY
 
       return res.send(transactions)
     } catch (e) {
@@ -131,7 +129,7 @@ module.exports = {
       
       await knex('user_transactions').update({ deleted_at: new Date() }).where({ id: transaction_id })
 
-      res.send({ msg: 'Movimentação deletada com sucesso!' })
+      res.send(transaction_id)
     } catch (e) {
       console.error(e)
     }
