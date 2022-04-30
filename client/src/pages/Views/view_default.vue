@@ -21,7 +21,8 @@
             </h5>
             <AppCardItem 
             v-for="item in day" 
-            :key="item.id" :data="item"/>
+            :key="item.id" :data="item"
+            @onDelete="$store.dispatch('transactions/ActionDeleteTransaction', $event)"/>
           </div>
         </AppCardDefault>
         <AppCardDefault 
@@ -32,12 +33,13 @@
          <div
           v-for="(day, index) in spends.data"
           :key="index">
-            <h5 class="p-2 pb-3 border-bottom text-danger text-uppercase">
+            <h5 class="p-2 pb-3 border-bottom text-danger text-uppercase" style="margin: 0">
               {{ index.split('.')[0] + index.split('.')[1] }}
             </h5>
-            <AppCardItem 
+            <AppCardItem
             v-for="item in day" 
-            :key="item.id" :data="item"/>
+            :key="item.id" :data="item"
+            @onDelete="$store.dispatch('transactions/ActionDeleteTransaction', $event)"/>
           </div>
         </AppCardDefault>
       </div>
