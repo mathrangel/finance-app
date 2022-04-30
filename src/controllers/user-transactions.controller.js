@@ -72,7 +72,8 @@ module.exports = {
         user_id,
         category_id, 
         type_transaction_id,
-        value
+        value,
+        created_at
       } = req.body
 
       const categoriesSelectColumns = [
@@ -86,11 +87,12 @@ module.exports = {
       ]
 
       const transaction = new UserTransactions({
-        title: title,
-        user_id: user_id,
-        category_id: category_id,
-        type_transaction_id: type_transaction_id,
-        value: value
+        title,
+        user_id,
+        category_id,
+        type_transaction_id,
+        value,
+        created_at: new Date(created_at)
       })
       await transaction.save()
 
@@ -100,7 +102,7 @@ module.exports = {
         user: null,
         type_transaction: null,
         category: null,
-        created_at: new Date()
+        created_at: new Date(created_at)
       }
 
       trans.category = await Category.get().select(categoriesSelectColumns).where({ id: category_id }).first()

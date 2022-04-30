@@ -34,6 +34,7 @@ module.exports = class UserTransactions{
       category_id: this.category_id,
       type_transaction_id: this.type_transaction_id,
       value: this.value,
+      created_at: this.created_at
     })
   }
 }
