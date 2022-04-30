@@ -15,6 +15,11 @@
       type="number"
       placeholder="Digite o valor da transação"
       label="Valor"/>
+      <Datepicker v-model="transaction.created_at" 
+      :clearable="false"
+      :type="Date" 
+      :monthChangeOnScroll="false"
+      />
       <AppInputDropdown
       v-model.number="transaction.category_id"
       label="Categoria"
@@ -34,12 +39,16 @@ import AppInputDefault from '../Input/input_default.vue'
 import AppInputDropdown from '../Input/input_dropdown.vue'
 import AppButtonDefault from '../Button/button_default.vue'
 
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 export default {
   name: 'ModalNewTransaction',
   components: {
     AppInputDefault,
     AppButtonDefault,
-    AppInputDropdown
+    AppInputDropdown,
+    Datepicker
   },
   data() {
     return {
@@ -49,6 +58,7 @@ export default {
         type_transaction_id: this.typeTransactionId,
         value: null,
         user_id: this.$store.state.auth.user.id,
+        created_at: new Date()
       }
     }
   },
@@ -82,4 +92,39 @@ export default {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
     backdrop-filter: blur(5px);
   }
+
+  .dp__button, .dp__selection_preview {
+    display: none;
+  }
+
+  .dp__action_buttons {
+    width: 100% !important;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .dp__input_icon_pad {
+    border: 0;
+    background: transparent;
+  }
+  
+  .dp__input_wrap {
+    border: #198754 1px solid;
+    border-radius: 4px;
+    width: 250px; 
+    font-size: 14px;
+    padding: 2px 0;
+    margin: 10px 0;
+  }
+
+  .dp__main::after{
+    position: absolute;
+    content: 'Data';
+    background: #fff;
+    font-weight: bold;
+    color: #198754;
+    margin-left: 20px;
+    margin-top: -65px !important;
+  }
+
 </style>
