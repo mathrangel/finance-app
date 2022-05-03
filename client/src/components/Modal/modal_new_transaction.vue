@@ -15,15 +15,21 @@
       type="number"
       placeholder="Digite o valor da transação"
       label="Valor"/>
-      <Datepicker v-model="transaction.created_at" 
-      :clearable="false"
-      :type="Date" 
-      :monthChangeOnScroll="false"
-      />
-      <AppInputDropdown
-      v-model.number="transaction.category_id"
-      label="Categoria"
-      :array="$store.state.transactions.transactions.categories"/>
+      <div class="d-flex align-items-center my-3">
+        <Datepicker v-model="transaction.created_at" 
+        locale="pt"
+        monthNameFormat="long"
+        format="dd/MM/yyyy"
+        :clearable="false"
+        :enableTimePicker="false"
+        :type="Date" 
+        :monthChangeOnScroll="false"
+        :maxDate="new Date()"/>
+        <AppInputDropdown
+        v-model.number="transaction.category_id"
+        label="Categoria"
+        :array="$store.state.transactions.transactions.categories"/>
+      </div>
       <AppButtonDefault 
       @click="newTransaction()" 
       class="my-4" 
@@ -93,7 +99,7 @@ export default {
     backdrop-filter: blur(5px);
   }
 
-  .dp__button, .dp__selection_preview {
+  .dp__selection_preview {
     display: none;
   }
 
@@ -111,10 +117,9 @@ export default {
   .dp__input_wrap {
     border: #198754 1px solid;
     border-radius: 4px;
-    width: 250px; 
+    width: 130px;
     font-size: 14px;
-    padding: 2px 0;
-    margin: 10px 0;
+    margin-right: 10px;
   }
 
   .dp__main::after{
@@ -124,7 +129,7 @@ export default {
     font-weight: bold;
     color: #198754;
     margin-left: 20px;
-    margin-top: -65px !important;
+    margin-top: -50px !important;
   }
 
 </style>

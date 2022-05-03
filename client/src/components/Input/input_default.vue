@@ -7,7 +7,7 @@
     </div>
     <input 
     class="my-3 p-2 rounded border border-success" 
-    style="width: 250px; font-size: 14px" 
+    style="width: 310px; font-size: 14px" 
     @input="$emit('update:modelValue', $event.target.value)"
     :type="type"
     :placeholder="placeholder">
