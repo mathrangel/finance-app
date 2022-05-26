@@ -34,6 +34,7 @@
         </AppInputDefault>
       </div>
       <AppButtonDefault
+      :success="true" 
       @onClick="newUser" 
       label="Criar conta"
       type="submit">

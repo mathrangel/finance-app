@@ -31,6 +31,7 @@
         :array="$store.state.transactions.transactions.categories"/>
       </div>
       <AppButtonDefault 
+      :success="true" 
       @click="newTransaction()" 
       class="my-4" 
       type="submit" 

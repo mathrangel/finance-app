@@ -22,7 +22,8 @@
       label="Senha">
       </AppInputDefault>
       <div class="mt-5"></div>
-      <AppButtonDefault 
+      <AppButtonDefault
+      :success="true" 
       @onClick="login()" 
       label="Entrar"
       type="submit"></AppButtonDefault>
