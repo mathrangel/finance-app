@@ -9,12 +9,15 @@
     @openRegister="closeLoginAndOpenRegister()" v-if="modalLogin">
     </AppModalLogin>
     <header style="max-width: 1080px" class="m-auto d-flex justify-content-between align-items-center">
-      <div>LOGOTIPO</div>
+      <div>
+        <img src="/images/logo.svg" alt="">
+      </div>
       <div>
         <button @click="toggleModalLogin()" class="btn btn-outline-success px-3 mx-2 my-3">
           Login
         </button>
         <AppButtonDefault
+          :success="true"
           @onClick="toggleModalRegister()" 
           label="Começar agora"
           type="submit">
