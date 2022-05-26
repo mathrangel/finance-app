@@ -1,11 +1,6 @@
 <template>
-  <footer class="d-flex justify-content-around align-items-end bg-success">
-    <div class="p-5">
-      1
-    </div>
-    <div class="p-5">
-      2
-    </div>
+  <footer class="d-flex  bg-success w-100 text-white p-3">
+    <p class="m-auto">&copy; Todos os direitos reservados</p>
   </footer>
 </template>
 
